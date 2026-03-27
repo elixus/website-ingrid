@@ -1,0 +1,127 @@
+---
+interface Service {
+	title: string;
+	description: string;
+}
+
+interface Props {
+	heading: string;
+	services: Service[];
+	Content: any;
+}
+
+const { heading, services, Content } = Astro.props;
+
+const icons = [
+	// Individual
+	`<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="9" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+	// Couples
+	`<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.2"/><circle cx="19" cy="9" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M1 24c0-4.418 3.582-8 8-8M19 16c4.418 0 8 3.582 8 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M12 18c0-1.1.9-2 2-2s2 .9 2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+	// Workshop
+	`<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3" y="6" width="22" height="16" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M9 6V4M19 6V4M3 11h22" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+];
+---
+
+<section id="aanbod" class="services">
+  <div class="services__inner">
+    <header class="services__header">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <h2 class="services__heading">{heading}</h2>
+      <div class="services__intro prose">
+        <Content />
+      </div>
+    </header>
+
+    <div class="services__grid">
+      {services.map((service, i) => (
+        <article class="service-card">
+          <div class="service-card__icon" set:html={icons[i] ?? icons[0]} />
+          <h3 class="service-card__title">{service.title}</h3>
+          <p class="service-card__desc">{service.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    padding: 6rem 1.5rem;
+    background-color: var(--color-surface);
+    position: relative;
+  }
+
+  .services__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  .services__header {
+    margin-bottom: 3.5rem;
+    max-width: 40rem;
+  }
+
+  .services__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 1rem 0 1.5rem;
+  }
+
+  .services__intro {
+    font-size: 1rem;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .services__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    background-color: var(--color-bg);
+    padding: 2.5rem 2rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(28, 24, 20, 0.07);
+    border-bottom-color: var(--color-clay);
+  }
+
+  .service-card__icon {
+    color: var(--color-clay);
+    margin-bottom: 1.5rem;
+  }
+
+  .service-card__title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 0 0 0.75rem;
+  }
+
+  .service-card__desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+</style>

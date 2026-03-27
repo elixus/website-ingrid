@@ -1,0 +1,118 @@
+---
+interface Props {
+	heading: string;
+	topics: string[];
+	Content: any;
+}
+
+const { heading, topics, Content } = Astro.props;
+---
+
+<section id="themas" class="topics">
+  <div class="topics__inner">
+    <header class="topics__header">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <h2 class="topics__heading">{heading}</h2>
+    </header>
+
+    <div class="topics__body">
+      <div class="topics__cloud">
+        {topics.map((topic) => (
+          <span class="topic-tag">{topic}</span>
+        ))}
+      </div>
+
+      <div class="topics__caption prose">
+        <Content />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .topics {
+    padding: 6rem 1.5rem;
+    background-color: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .topics::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid var(--color-sand);
+    opacity: 0.4;
+  }
+
+  .topics__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .topics__header {
+    margin-bottom: 3rem;
+  }
+
+  .topics__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 1rem 0 0;
+  }
+
+  .topics__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .topics__body {
+      grid-template-columns: 3fr 2fr;
+    }
+  }
+
+  .topics__cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  .topic-tag {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-muted);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-sand);
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    cursor: default;
+  }
+
+  .topic-tag:hover {
+    background-color: var(--color-sage);
+    color: var(--color-bg);
+    border-color: var(--color-sage);
+  }
+
+  .topics__caption {
+    padding-top: 0.5rem;
+    font-size: 1rem;
+  }
+</style>

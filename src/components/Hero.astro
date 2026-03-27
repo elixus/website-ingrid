@@ -1,0 +1,206 @@
+---
+import { Image } from "astro:assets";
+import profileImg from "../assets/ingrid-profile.webp";
+
+interface Props {
+	name: string;
+	title: string;
+	tagline: string;
+	subtitle?: string;
+	Content: any;
+}
+
+const { name, title, tagline, subtitle, Content } = Astro.props;
+---
+
+<section id="home" class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <h1 class="hero__name">{name}</h1>
+      <p class="hero__title">{title}</p>
+
+      <blockquote class="hero__tagline">
+        <span class="hero__tagline-mark">&ldquo;</span>{tagline}<span class="hero__tagline-mark">&rdquo;</span>
+      </blockquote>
+
+      {subtitle && (
+        <p class="hero__subtitle">{subtitle}</p>
+      )}
+
+      <div class="hero__prose prose">
+        <Content />
+      </div>
+
+      <a href="#contact" class="hero__cta">
+        Maak kennis
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero__visual">
+      <div class="hero__photo-frame">
+        <Image
+          src={profileImg}
+          alt="Ingrid De Wilde"
+          class="hero__photo"
+          width={480}
+          height={600}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+    padding: 4rem 1.5rem 8rem;
+  }
+
+  .hero__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .hero__inner {
+      grid-template-columns: 3fr 2fr;
+      align-items: center;
+    }
+  }
+
+  .hero__name {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.1;
+    margin: 1rem 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero__title {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-clay);
+    margin: 0 0 2rem;
+  }
+
+  .hero__tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-sage);
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+    max-width: 38rem;
+    border: none;
+    padding: 0;
+  }
+
+  .hero__tagline-mark {
+    font-size: 1.5em;
+    line-height: 0;
+    vertical-align: -0.2em;
+    color: var(--color-clay);
+    opacity: 0.5;
+    margin: 0 0.1em;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    letter-spacing: 0.05em;
+    margin: 0 0 2rem;
+  }
+
+  .hero__prose {
+    max-width: 32rem;
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-bg);
+    background-color: var(--color-sage);
+    padding: 0.875rem 1.75rem;
+    text-decoration: none;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+  }
+
+  .hero__cta:hover {
+    background-color: var(--color-text);
+    transform: translateY(-2px);
+  }
+
+  /* Right visual: profile photo */
+  .hero__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: -1;
+  }
+
+  @media (min-width: 768px) {
+    .hero__visual {
+      order: 0;
+    }
+  }
+
+  .hero__photo-frame {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 6px var(--color-surface),
+      0 0 0 7px var(--color-sand);
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .hero__photo-frame {
+      width: 340px;
+      height: 340px;
+    }
+  }
+
+  .hero__photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+</style>

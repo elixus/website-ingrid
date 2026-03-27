@@ -1,0 +1,191 @@
+---
+import { Image } from "astro:assets";
+import aboutImg from "../assets/ingrid-about.png";
+
+interface Props {
+	heading: string;
+	credentials: {
+		university: string;
+		license: string;
+		therapyTypes: string[];
+	};
+	Content: any;
+}
+
+const { heading, credentials, Content } = Astro.props;
+---
+
+<section id="over" class="about">
+  <div class="about__inner">
+    <header class="about__header">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <h2 class="about__heading">{heading}</h2>
+    </header>
+
+    <div class="about__body">
+      <div class="about__text prose">
+        <Content />
+      </div>
+
+      <aside class="about__credentials">
+        <div class="credentials-card">
+          <p class="credentials-card__item credentials-card__university">
+            {credentials.university}
+          </p>
+          <p class="credentials-card__item credentials-card__license">
+            {credentials.license}
+          </p>
+          <ul class="credentials-card__therapies">
+            {credentials.therapyTypes.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+          <div class="credentials-card__badge">
+            <Image
+              src={aboutImg}
+              alt="Erkend door de Psychologencommissie"
+              class="credentials-card__badge-img"
+              width={549}
+              height={117}
+            />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div class="about__wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 30 Q180 0 360 30 Q540 60 720 30 Q900 0 1080 30 Q1260 60 1440 30 L1440 60 L0 60 Z" fill="#ede8df"/>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 6rem 1.5rem 0;
+    position: relative;
+    background-color: var(--color-bg);
+  }
+
+  .about__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  .about__header {
+    margin-bottom: 3rem;
+  }
+
+  .about__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 1rem 0 0;
+  }
+
+  .about__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .about__body {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+  }
+
+  .about__text {
+    font-size: 1.0625rem;
+  }
+
+  /* Right column */
+  .about__credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Credentials card */
+  .credentials-card {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border-left: 3px solid var(--color-clay);
+  }
+
+  .credentials-card__item {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    margin: 0 0 0.5rem;
+    line-height: 1.5;
+  }
+
+  .credentials-card__university {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .credentials-card__license {
+    font-size: 0.8125rem;
+    font-family: var(--font-ui);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.25rem;
+    color: var(--color-muted);
+  }
+
+  .credentials-card__therapies {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-sand-light);
+    padding-top: 1rem;
+  }
+
+  .credentials-card__therapies li {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    color: var(--color-sage);
+    padding: 0.25rem 0;
+  }
+
+  .credentials-card__therapies li::before {
+    content: "— ";
+    color: var(--color-clay);
+  }
+
+  .credentials-card__badge {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-sand-light);
+  }
+
+  .credentials-card__badge-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.85;
+    filter: grayscale(20%);
+  }
+
+  /* Wave */
+  .about__wave {
+    margin-top: 6rem;
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .about__wave svg {
+    width: 100%;
+    height: 100%;
+  }
+</style>

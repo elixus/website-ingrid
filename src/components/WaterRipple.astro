@@ -1,0 +1,62 @@
+---
+interface Props {
+	size?: number;
+	color?: string;
+	class?: string;
+}
+
+const { size = 320, color = "#4a6358", class: className = "" } = Astro.props;
+---
+
+<div class:list={["water-ripple-wrap", className]} aria-hidden="true">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 320 320"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      class="ripple-ring"
+      cx="160"
+      cy="160"
+      r="60"
+      stroke={color}
+      stroke-width="1"
+      fill="none"
+      opacity="0.5"
+    />
+    <circle
+      class="ripple-ring"
+      cx="160"
+      cy="160"
+      r="60"
+      stroke={color}
+      stroke-width="0.8"
+      fill="none"
+      opacity="0.35"
+    />
+    <circle
+      class="ripple-ring"
+      cx="160"
+      cy="160"
+      r="60"
+      stroke={color}
+      stroke-width="0.6"
+      fill="none"
+      opacity="0.2"
+    />
+  </svg>
+</div>
+
+<style>
+  .water-ripple-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+  }
+</style>

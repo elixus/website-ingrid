@@ -1,0 +1,228 @@
+---
+interface Props {
+	heading: string;
+	address: { street: string; city: string; postal: string };
+	phone: { number: string; hours: string; sms: boolean };
+	email: string;
+	Content: any;
+	lang?: "nl" | "en";
+}
+
+const { heading, address, phone, email, Content, lang = "nl" } = Astro.props;
+const ctaLabel = lang === "en" ? "Send an email" : "Stuur een e-mail";
+const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(`${address.street}, ${address.postal} ${address.city}`)}`;
+---
+
+<section id="contact" class="contact">
+  <div class="contact__inner">
+    <header class="contact__header">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <h2 class="contact__heading">{heading}</h2>
+      <div class="contact__intro prose">
+        <Content />
+      </div>
+    </header>
+
+    <div class="contact__body">
+      <div class="contact__details">
+        <!-- Address -->
+        <div class="contact-item">
+          <div class="contact-item__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2C7.239 2 5 4.239 5 7c0 4 5 11 5 11s5-7 5-11c0-2.761-2.239-5-5-5z" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="10" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="contact-item__body">
+            <a
+              href={mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-item__link"
+            >
+              {address.street}<br />{address.postal} {address.city}
+            </a>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="contact-item">
+          <div class="contact-item__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 3h-3A1.5 1.5 0 002 4.5C2 12.508 7.492 18 15.5 18A1.5 1.5 0 0017 16.5v-3a1.5 1.5 0 00-1.5-1.5h-2a1.5 1.5 0 00-1.5 1.5v.5a7.5 7.5 0 01-5.5-5.5h.5A1.5 1.5 0 008 7v-2A1.5 1.5 0 006.5 3z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="contact-item__body">
+            <a href={`tel:${phone.number.replace(/[^+\d]/g, "")}`} class="contact-item__link">
+              {phone.number}
+            </a>
+            <span class="contact-item__sub">{phone.hours}{phone.sms ? " · SMS" : ""}</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-item">
+          <div class="contact-item__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="4" width="16" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M2 6l8 6 8-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="contact-item__body">
+            <a href={`mailto:${email}`} class="contact-item__link contact-item__email">
+              {email}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="contact__cta-wrap">
+        <a href={`mailto:${email}`} class="contact__cta">
+          {ctaLabel}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative circle -->
+  <div class="contact__deco" aria-hidden="true"></div>
+</section>
+
+<style>
+  .contact {
+    padding: 6rem 1.5rem 8rem;
+    background-color: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact__header {
+    margin-bottom: 3rem;
+    max-width: 36rem;
+  }
+
+  .contact__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 1rem 0 1rem;
+  }
+
+  .contact__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 640px) {
+    .contact__body {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contact__details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-item__icon {
+    color: var(--color-clay);
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .contact-item__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-item__link {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color 0.2s ease;
+  }
+
+  .contact-item__link:hover {
+    color: var(--color-sage);
+  }
+
+  .contact-item__email {
+    font-family: var(--font-ui);
+    font-size: 0.9375rem;
+  }
+
+  .contact-item__sub {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  /* CTA */
+  .contact__cta-wrap {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  .contact__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-bg);
+    background-color: var(--color-clay);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+  }
+
+  .contact__cta:hover {
+    background-color: var(--color-text);
+    transform: translateY(-2px);
+  }
+
+  /* Decorative circle */
+  .contact__deco {
+    position: absolute;
+    bottom: -120px;
+    right: -80px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px solid var(--color-sand);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+</style>

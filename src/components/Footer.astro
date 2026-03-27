@@ -1,7 +1,166 @@
 ---
+interface Props {
+	lang?: "nl" | "en";
+}
+
+const { lang = "nl" } = Astro.props;
 const year = new Date().getFullYear();
+
+const text = {
+	nl: {
+		tagline: "Klinisch Psycholoog & Psychotherapeut",
+		address: "Dennenlaan 10, 3040 Huldenberg",
+		phone: "(0476) 611 316",
+		email: "dewilde.ingrid@skynet.be",
+		deonto: "Deontologische code (BFP)",
+		privacy: "Privacybeleid",
+	},
+	en: {
+		tagline: "Clinical Psychologist & Psychotherapist",
+		address: "Dennenlaan 10, 3040 Huldenberg",
+		phone: "(0476) 611 316",
+		email: "dewilde.ingrid@skynet.be",
+		deonto: "Deontological code (BFP)",
+		privacy: "Privacy policy",
+	},
+};
+
+const t = text[lang];
 ---
 
-<footer>
-  <p>&copy; {year}</p>
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <p class="footer__name">Ingrid De Wilde</p>
+      <p class="footer__tagline">{t.tagline}</p>
+      <div class="iching-divider footer__divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="footer__contact">
+      <p>{t.address}</p>
+      <p>
+        <a href="tel:+32476611316" class="footer__link">{t.phone}</a>
+      </p>
+      <p>
+        <a href="mailto:dewilde.ingrid@skynet.be" class="footer__link">{t.email}</a>
+      </p>
+    </div>
+
+    <div class="footer__links">
+      <a
+        href="https://www.bfp-fbp.be/nl/deontologie"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer__link"
+      >
+        {t.deonto}
+      </a>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; {year} Elixus · Alle rechten voorbehouden</p>
+    <p>ON 0871 658 826</p>
+  </div>
 </footer>
+
+<style>
+  .footer {
+    background-color: var(--color-text);
+    color: var(--color-sand-light);
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .footer__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer__inner {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-bg);
+    margin: 0 0 0.25rem;
+  }
+
+  .footer__tagline {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-sand);
+    margin: 0 0 1.5rem;
+  }
+
+  .footer__divider {
+    margin-top: 0;
+  }
+
+  .footer__divider span {
+    background-color: var(--color-clay);
+    opacity: 0.6;
+  }
+
+  .footer__contact p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-sand-light);
+    margin: 0 0 0.5rem;
+    opacity: 0.75;
+  }
+
+  .footer__link {
+    color: var(--color-sand-light);
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+  }
+
+  .footer__link:hover {
+    opacity: 1;
+    color: var(--color-clay);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__bottom {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    justify-content: space-between;
+  }
+
+  .footer__bottom p {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin: 0;
+    opacity: 0.6;
+  }
+</style>

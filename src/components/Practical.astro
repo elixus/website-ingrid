@@ -1,0 +1,235 @@
+---
+import IconBan from "./icons/IconBan.astro";
+import IconCalendar from "./icons/IconCalendar.astro";
+import IconCard from "./icons/IconCard.astro";
+import IconClock from "./icons/IconClock.astro";
+
+interface Props {
+	heading: string;
+	rates: {
+		standard: { amount: number; label: string };
+		evening: { amount: number; label: string; time: string };
+		effectiveDate: string;
+	};
+	session: {
+		duration: string;
+		payment: string;
+		cancellation: string;
+	};
+	noConsultations: string;
+	languages: string[];
+	Content: any;
+}
+
+const { heading, rates, session, noConsultations, languages, Content } =
+	Astro.props;
+---
+
+<section id="praktisch" class="practical">
+  <div class="practical__inner">
+    <header class="practical__header">
+      <div class="iching-divider">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <h2 class="practical__heading">{heading}</h2>
+    </header>
+
+    <div class="practical__body">
+      <!-- Rates column -->
+      <div class="practical__rates">
+        <h3 class="practical__sub">Honorarium</h3>
+
+        <div class="rate-block">
+          <div class="rate-item">
+            <span class="rate-item__amount">€{rates.standard.amount}</span>
+            <span class="rate-item__label">{rates.standard.label}</span>
+          </div>
+          <div class="rate-item">
+            <span class="rate-item__amount">€{rates.evening.amount}</span>
+            <span class="rate-item__label">{rates.evening.label} <em>({rates.evening.time})</em></span>
+          </div>
+          <p class="rate-note">v.a. {rates.effectiveDate}</p>
+        </div>
+      </div>
+
+      <!-- Policies column -->
+      <div class="practical__policies">
+        <h3 class="practical__sub">Sessie</h3>
+        <ul class="policy-list">
+          <li>
+            <span class="policy-list__icon"><IconClock /></span>
+            {session.duration}
+          </li>
+          <li>
+            <span class="policy-list__icon"><IconCard /></span>
+            {session.payment}
+          </li>
+          <li>
+            <span class="policy-list__icon"><IconCalendar /></span>
+            {session.cancellation}
+          </li>
+          <li>
+            <span class="policy-list__icon"><IconBan /></span>
+            {noConsultations}
+          </li>
+        </ul>
+
+        <h3 class="practical__sub practical__sub--mt">Talen</h3>
+        <ul class="lang-list">
+          {languages.map((lang) => (
+            <li>{lang}</li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Extra notes from MDX -->
+      <div class="practical__notes prose">
+        <Content />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .practical {
+    padding: 6rem 1.5rem;
+    background-color: var(--color-surface);
+  }
+
+  .practical__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+
+  .practical__header {
+    margin-bottom: 3rem;
+  }
+
+  .practical__heading {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text);
+    margin: 1rem 0 0;
+  }
+
+  .practical__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .practical__body {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .practical__sub {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-clay);
+    margin: 0 0 1.25rem;
+  }
+
+  .practical__sub--mt {
+    margin-top: 2rem;
+  }
+
+  /* Rates */
+  .rate-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rate-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 1.5rem;
+    background-color: var(--color-bg);
+    border-left: 3px solid var(--color-sage);
+  }
+
+  .rate-item__amount {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 300;
+    color: var(--color-text);
+    line-height: 1;
+  }
+
+  .rate-item__label {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .rate-item__label em {
+    font-style: normal;
+    color: var(--color-water);
+  }
+
+  .rate-note {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin: 0;
+    opacity: 0.7;
+  }
+
+  /* Policy list */
+  .policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .policy-list li {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .policy-list__icon {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--color-clay);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Language list */
+  .lang-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .lang-list li {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--color-sage);
+  }
+
+  .lang-list li::before {
+    content: "→ ";
+    color: var(--color-clay);
+  }
+</style>
