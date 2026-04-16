@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const heroCollection = defineCollection({
 	loader: glob({ pattern: "**/*.mdx", base: "./src/content/hero" }),
@@ -8,6 +9,7 @@ const heroCollection = defineCollection({
 		title: z.string(),
 		tagline: z.string(),
 		subtitle: z.string().optional(),
+		contact: z.string(),
 	}),
 });
 
@@ -27,12 +29,6 @@ const servicesCollection = defineCollection({
 	loader: glob({ pattern: "**/*.mdx", base: "./src/content/services" }),
 	schema: z.object({
 		heading: z.string(),
-		services: z.array(
-			z.object({
-				title: z.string(),
-				description: z.string(),
-			}),
-		),
 	}),
 });
 
@@ -40,7 +36,6 @@ const topicsCollection = defineCollection({
 	loader: glob({ pattern: "**/*.mdx", base: "./src/content/topics" }),
 	schema: z.object({
 		heading: z.string(),
-		topics: z.array(z.string()),
 	}),
 });
 

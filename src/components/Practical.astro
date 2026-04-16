@@ -75,19 +75,22 @@ const { heading, rates, session, noConsultations, languages, Content } =
             {noConsultations}
           </li>
         </ul>
+      </div>
 
+
+      <div class="practical__policies">
         <h3 class="practical__sub practical__sub--mt">Talen</h3>
         <ul class="lang-list">
           {languages.map((lang) => (
-            <li>{lang}</li>
+              <li>{lang}</li>
           ))}
         </ul>
       </div>
+    </div>
 
-      <!-- Extra notes from MDX -->
-      <div class="practical__notes prose">
-        <Content />
-      </div>
+    <!-- Extra notes from MDX -->
+    <div class="practical__notes prose">
+      <Content />
     </div>
   </div>
 </section>
