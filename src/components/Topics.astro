@@ -1,11 +1,10 @@
 ---
 interface Props {
 	heading: string;
-	topics: string[];
 	Content: any;
 }
 
-const { heading, topics, Content } = Astro.props;
+const { heading, Content } = Astro.props;
 ---
 
 <section id="themas" class="topics">
@@ -20,12 +19,6 @@ const { heading, topics, Content } = Astro.props;
     </header>
 
     <div class="topics__body">
-      <div class="topics__cloud">
-        {topics.map((topic) => (
-          <span class="topic-tag">{topic}</span>
-        ))}
-      </div>
-
       <div class="topics__caption prose">
         <Content />
       </div>
@@ -84,31 +77,6 @@ const { heading, topics, Content } = Astro.props;
     .topics__body {
       grid-template-columns: 3fr 2fr;
     }
-  }
-
-  .topics__cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.625rem;
-  }
-
-  .topic-tag {
-    display: inline-block;
-    font-family: var(--font-ui);
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: var(--color-muted);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-sand);
-    padding: 0.5rem 1rem;
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    cursor: default;
-  }
-
-  .topic-tag:hover {
-    background-color: var(--color-sage);
-    color: var(--color-bg);
-    border-color: var(--color-sage);
   }
 
   .topics__caption {

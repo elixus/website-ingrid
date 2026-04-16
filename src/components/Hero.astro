@@ -7,14 +7,26 @@ interface Props {
 	title: string;
 	tagline: string;
 	subtitle?: string;
+    contact: string;
 	Content: any;
 }
 
-const { name, title, tagline, subtitle, Content } = Astro.props;
+const { name, title, tagline, subtitle, contact, Content } = Astro.props;
 ---
 
 <section id="home" class="hero">
   <div class="hero__inner">
+    <div class="hero__visual">
+      <div class="hero__photo-frame">
+        <Image
+            src={profileImg}
+            alt="Ingrid De Wilde"
+            class="hero__photo"
+            width={600}
+            height={600}
+        />
+      </div>
+    </div>
     <div class="hero__content">
       <div class="iching-divider">
         <span></span>
@@ -38,23 +50,11 @@ const { name, title, tagline, subtitle, Content } = Astro.props;
       </div>
 
       <a href="#contact" class="hero__cta">
-        Maak kennis
+        {contact}
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
-    </div>
-
-    <div class="hero__visual">
-      <div class="hero__photo-frame">
-        <Image
-          src={profileImg}
-          alt="Ingrid De Wilde"
-          class="hero__photo"
-          width={480}
-          height={600}
-        />
-      </div>
     </div>
   </div>
 </section>
@@ -179,10 +179,9 @@ const { name, title, tagline, subtitle, Content } = Astro.props;
   }
 
   .hero__photo-frame {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     position: relative;
-    border-radius: 50%;
     box-shadow:
       0 0 0 6px var(--color-surface),
       0 0 0 7px var(--color-sand);
@@ -201,6 +200,6 @@ const { name, title, tagline, subtitle, Content } = Astro.props;
     height: 100%;
     display: block;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center;
   }
 </style>
