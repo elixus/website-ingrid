@@ -2,16 +2,17 @@
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
+import {getEntry} from "astro:content";
 
 interface Props {
-	title?: string;
-	description?: string;
+	title: string;
+	description: string;
 	lang?: "nl" | "en";
 }
 
 const {
-	title = "Ingrid De Wilde — Psycholoog & Psychotherapeut",
-	description = "Klinisch psycholoog en psychotherapeut te Huldenberg. Individuele begeleiding, relatietherapie en workshops. Online consultaties mogelijk.",
+    title,
+    description,
 	lang = "nl",
 } = Astro.props;
 ---
