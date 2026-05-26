@@ -80,6 +80,14 @@ const contactCollection = defineCollection({
 	}),
 });
 
+const metaCollection = defineCollection({
+	loader: glob({ pattern: "**/*.mdx", base: "./src/content/meta" }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+	}),
+});
+
 export const collections = {
 	hero: heroCollection,
 	about: aboutCollection,
@@ -87,4 +95,5 @@ export const collections = {
 	topics: topicsCollection,
 	practical: practicalCollection,
 	contact: contactCollection,
+	meta: metaCollection,
 };
